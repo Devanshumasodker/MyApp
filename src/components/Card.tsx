@@ -1,33 +1,71 @@
-import React from 'react';
-import { View, Image, FlatList, StyleSheet, Dimensions } from 'react-native';
+import React, { useState, useRef } from 'react';
+import {
+  View,
+  Image,
+  FlatList,
+  StyleSheet,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import Video from 'react-native-video';
 
 const screenWidth = Dimensions.get('window').width;
 
-type CardProps = {
-  images: any[]; // array of image sources
+type MediaItem = {
+  type: 'image' | 'video';
+  source: any;
 };
 
-const Card: React.FC<CardProps> = ({ images }) => {
-  const renderImage = () => {
-    if (images.length > 1) {
-      return (
-        <FlatList
-          data={images}
-          horizontal
-          pagingEnabled
-          keyExtractor={(_, index) => index.toString()}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <Image source={item} style={styles.image} />
-          )}
-        />
-      );
-    } else {
-      return <Image source={images[0]} style={styles.image} />;
+type CardProps = {
+  media: MediaItem[];
+  isActive: boolean; // from App.tsx
+};
+
+const Card: React.FC<CardProps> = ({ media, isActive }) => {
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
+    if (viewableItems.length > 0) {
+      setCurrentMediaIndex(viewableItems[0].index);
     }
+  }).current;
+
+  const renderItem = ({ item, index }: { item: MediaItem; index: number }) => {
+    const isPlaying = isActive && index === currentMediaIndex;
+
+    if (item.type === 'image') {
+      return <Image source={item.source} style={styles.media} />;
+    }
+
+    return (
+      <TouchableWithoutFeedback onPress={() => setIsMuted(!isMuted)}>
+        <Video
+          source={item.source}
+          style={styles.media}
+          resizeMode="cover"
+          muted={isMuted}
+          repeat
+          paused={!isPlaying}
+        />
+      </TouchableWithoutFeedback>
+    );
   };
 
-  return <View style={styles.card}>{renderImage()}</View>;
+  return (
+    <View style={styles.card}>
+      <FlatList
+        data={media}
+        horizontal
+        pagingEnabled
+        keyExtractor={(_, index) => index.toString()}
+        showsHorizontalScrollIndicator={false}
+        renderItem={renderItem}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={{ viewAreaCoveragePercentThreshold: 30 }}
+      />
+    </View>
+  );
 };
 
 export default Card;
@@ -41,7 +79,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     elevation: 3,
   },
-  image: {
+  media: {
     width: screenWidth,
     height: 600,
     resizeMode: 'cover',
