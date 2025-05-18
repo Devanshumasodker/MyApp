@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
+  Text,
 } from 'react-native';
 import Video from 'react-native-video';
 
@@ -18,12 +19,24 @@ type MediaItem = {
 
 type CardProps = {
   media: MediaItem[];
-  isActive: boolean; // from App.tsx
+  isActive: boolean;
+  username: string;
+  description: string;
+  profilePic: any;
+  isMuted: boolean;
+  toggleMute: () => void;
 };
 
-const Card: React.FC<CardProps> = ({ media, isActive }) => {
+const Card: React.FC<CardProps> = ({
+  media,
+  isActive,
+  username,
+  description,
+  profilePic,
+  isMuted,
+  toggleMute
+}) => {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-  const [isMuted, setIsMuted] = useState(true);
 
   const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
     if (viewableItems.length > 0) {
@@ -39,7 +52,7 @@ const Card: React.FC<CardProps> = ({ media, isActive }) => {
     }
 
     return (
-      <TouchableWithoutFeedback onPress={() => setIsMuted(!isMuted)}>
+      <TouchableWithoutFeedback onPress={toggleMute}>
         <Video
           source={item.source}
           style={styles.media}
@@ -54,6 +67,13 @@ const Card: React.FC<CardProps> = ({ media, isActive }) => {
 
   return (
     <View style={styles.card}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Image source={profilePic} style={styles.profilePic} />
+        <Text style={styles.username}>{username}</Text>
+      </View>
+
+      {/* Media */}
       <FlatList
         data={media}
         horizontal
@@ -64,6 +84,9 @@ const Card: React.FC<CardProps> = ({ media, isActive }) => {
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{ viewAreaCoveragePercentThreshold: 30 }}
       />
+
+      {/* Description */}
+      <Text style={styles.description}>{description}</Text>
     </View>
   );
 };
@@ -79,9 +102,29 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     elevation: 3,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  profilePic: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  username: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   media: {
     width: screenWidth,
     height: 600,
     resizeMode: 'cover',
+  },
+  description: {
+    padding: 10,
+    fontSize: 14,
+    color: '#333',
   },
 });
