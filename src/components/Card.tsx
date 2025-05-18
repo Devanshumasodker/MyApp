@@ -73,6 +73,24 @@ const Card: React.FC<CardProps> = ({
         <Text style={styles.username}>{username}</Text>
       </View>
 
+       {media.length > 1 && (
+    <View style={styles.indicatorContainer}>
+      <Text style={styles.indicatorText}>
+        {currentMediaIndex + 1}/{media.length}
+      </Text>
+    </View>
+  )}
+
+  {/* Mute Indicator (only for video) */}
+{media[currentMediaIndex]?.type === 'video' && (
+  <View style={styles.muteIndicatorContainer}>
+    <Text style={styles.muteIndicatorText}>
+      {isMuted ? '🔇' : '🔊'}
+    </Text>
+  </View>
+)}
+
+
       {/* Media */}
       <FlatList
         data={media}
@@ -127,4 +145,34 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#333',
   },
+  indicatorContainer: {
+  position: 'absolute',
+  top: 15,
+  right: 15,
+  backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  borderRadius: 12,
+  paddingHorizontal: 8,
+  paddingVertical: 4,
+  zIndex: 10,
+},
+indicatorText: {
+  color: 'white',
+  fontSize: 12,
+  fontWeight: 'bold',
+},
+muteIndicatorContainer: {
+  position: 'absolute',
+  bottom: 20,
+  right: 15,
+  backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  borderRadius: 20,
+  padding: 6,
+  zIndex: 10,
+},
+muteIndicatorText: {
+  color: 'white',
+  fontSize: 16,
+},
+
+
 });
