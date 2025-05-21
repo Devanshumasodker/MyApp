@@ -21,7 +21,7 @@ const mediaData = [
   },
   {
     id: '3',
-    username: 'video_lover',
+    username: 'Govinda_FanBoy',
     description: 'Early morning workout session with govinda and neelam 💪',
     profilePic: require('../assets/images/img3.jpg'),
     media: [{ type: 'video', source: require('../assets/videos/v4.mp4') }],
@@ -42,7 +42,7 @@ const mediaData = [
   },
   {
     id: '6',
-    username: 'fitness_freak Govinda',
+    username: 'fitness_freaky',
     description: 'Just Dance with fire 🔥',
     profilePic: require('../assets/images/aa.jpg'),
     media: [{ type: 'video', source: require('../assets/videos/v2.mp4') }],

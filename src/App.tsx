@@ -24,36 +24,7 @@ const App = () => {
     }
   }).current;
 
-  // const data = [
-  //   { id: '1', media: [{ type: 'image', source: require('./assets/images/aa.jpg') }] },
-  //   {
-  //     id: '2',
-  //     media: [
-  //       { type: 'image', source: require('./assets/images/aa.jpg') },
-  //       { type: 'image', source: require('./assets/images/aa.jpg') },
-  //     ],
-  //   },
-  //   { id: '3', media: [{ type: 'image', source: require('./assets/images/aa.jpg') }] },
-  //   {
-  //     id: '4',
-  //     media: [
-  //       { type: 'image', source: require('./assets/images/aa.jpg') },
-  //       { type: 'image', source: require('./assets/images/aa.jpg') },
-  //       { type: 'image', source: require('./assets/images/aa.jpg') },
-  //     ],
-  //   },
-  //   { id: '5', media: [{ type: 'image', source: require('./assets/images/aa.jpg') }] },
-  //   {
-  //     id: '6',
-  //     media: [
-  //       { type: 'image', source: require('./assets/images/aa.jpg') },
-  //       { type: 'image', source: require('./assets/images/aa.jpg') },
-  //     ],
-  //   },
-  //   { id: '7', media: [{ type: 'video', source: require('./assets/videos/v2.mp4') }] },
-  //   { id: '8', media: [{ type: 'video', source: require('./assets/videos/v3.mp4') }] },
-  //   { id: '9', media: [{ type: 'video', source: require('./assets/videos/v4.mp4') }] },
-  // ];
+
 
   return (
     <SafeAreaView style={styles.container}>

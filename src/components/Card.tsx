@@ -81,7 +81,7 @@ const Card: React.FC<CardProps> = ({
     </View>
   )}
 
-  {/* Mute Indicator (only for video) */}
+  {/* Mute Indicator For video */}
 {media[currentMediaIndex]?.type === 'video' && (
   <View style={styles.muteIndicatorContainer}>
     <Text style={styles.muteIndicatorText}>
